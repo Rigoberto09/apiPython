@@ -3,6 +3,11 @@
 
 # crear requerimientos de [pip freeze > requirements.txt]
 # instalar todos los requermientos de la app.py [pip install -r requirements.txt]
+
+# Correr el entorno virutal [./venv/Scripts/activate]
+#Salir del entorno virtual [deactivate]
+
+# correr la app [python app.py]
 from flask import Flask, render_template
 
 
