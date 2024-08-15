@@ -8,9 +8,8 @@
 #Salir del entorno virtual [deactivate]
 
 # correr la app [python app.py]
-from flask import Flask, render_template
-
-
+from flask import Flask, render_template, jsonify
+from conexionPosgreeSQL import abrir
 
 app = Flask(__name__)
 
@@ -18,6 +17,20 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route("/data")
+def data():
+    conn = abrir()
+    cur = conn.cursor()
+    cur.execute("SELECT version();")
+    version = cur.fetchone()  # Obtener el resultado de la consulta
+    cur.close()
+    conn.close()
+    
+    # Devolver el resultado como un JSON
+    return jsonify({
+        'version': version[0]  # version[0] ya que fetchone() devuelve una tupla
+    })
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
